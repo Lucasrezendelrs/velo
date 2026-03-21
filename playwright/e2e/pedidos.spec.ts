@@ -9,11 +9,11 @@ test('deve consultar um pedido aprovado', async ({ page }) => {
 
   // Act
   await page.getByTestId('search-order-id').fill('VLO-PVBGL5')
-  await page.getByTestId('search-order-id').click()
+  await page.getByTestId('search-order-button').click()
 
   // Assert
   await expect(page.getByTestId('search-order-id')).toBeVisible()
-  await expect(page.getByTestId('order-result-id')).toContainText('VLO-PVBGL5')
+  await expect(page.getByTestId('order-result-id')).toHaveText('VLO-PVBGL5')
 
   await expect(page.getByTestId('order-result-status')).toBeVisible()
   await expect(page.getByTestId('order-result-status')).toContainText('APROVADO')
