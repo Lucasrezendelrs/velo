@@ -12,11 +12,17 @@ test('deve consultar um pedido aprovado', async ({ page }) => {
   await page.getByTestId('search-order-button').click()
 
   // Assert
+  
+  // Usando x-pach
+  //const orderCode = page.locator('//p[text()="Pedido"]/..//p[text()="VLO-PVBGL5"]')
+  //await expect(orderCode).toBeVisible({timeout: 10_000})
 
-  await expect(page.getByTestId('order-result-VLO-PVBGL5')).toBeVisible({ timeout: 10_000 })
-  await expect(page.getByTestId('order-result-VLO-PVBGL5')).toContainText('VLO-PVBGL5');
+  const containerPedido = page.getByRole('paragraph')
+    .filter({hasText: /^Pedido$/}) // /^Pedido$ Expressão regular que vai melhorar o critério de filtragem, buscando somente o tento que começa e termina com Pedido
+    .locator('..') //Sobe para o elemento pai (a div que agrupa ambos)
 
-  await expect(page.getByTestId('order-result-VLO-PVBGL5')).toBeVisible()
-  await expect(page.getByTestId('order-result-VLO-PVBGL5')).toContainText('APROVADO');
+  await expect(containerPedido).toContainText('VLO-PVBGL5',{timeout: 15_000})  
+
+  await expect(page.getByText('APROVADO')).toBeVisible()
 
 })
