@@ -1,7 +1,7 @@
 export function generateOrderCode() {
     const alphanumeric = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   
-    function randomString(length) {
+    function randomString(length: number) {
       const array = new Uint32Array(length);
       crypto.getRandomValues(array);
   
