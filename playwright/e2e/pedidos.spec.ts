@@ -24,18 +24,34 @@ test.describe('Consulta de Pedido', () => {
     await page.getByTestId('search-order-button').click()
 
     // Assert
-
-    // Usando x-pach
-    //const orderCode = page.locator('//p[text()="Pedido"]/..//p[text()="VLO-PVBGL5"]')
-    //await expect(orderCode).toBeVisible({timeout: 10_000})
-
-    const containerPedido = page.getByRole('paragraph')
-      .filter({ hasText: /^Pedido$/ }) // /^Pedido$ Expressão regular que vai melhorar o critério de filtragem, buscando somente o tento que começa e termina com Pedido
-      .locator('..') //Sobe para o elemento pai (a div que agrupa ambos)
-
-    await expect(containerPedido).toContainText(order, { timeout: 15_000 })
-
-    await expect(page.getByText('APROVADO')).toBeVisible()
+    await expect(page.getByTestId(`order-result-${order}`)).toMatchAriaSnapshot(`
+      - img
+      - paragraph: Pedido
+      - paragraph: ${order}
+      - img
+      - text: APROVADO
+      - img "Velô Sprint"
+      - paragraph: Modelo
+      - paragraph: Velô Sprint
+      - paragraph: Cor
+      - paragraph: Lunar White
+      - paragraph: Interior
+      - paragraph: cream
+      - paragraph: Rodas
+      - paragraph: sport Wheels
+      - heading "Dados do Cliente" [level=4]
+      - paragraph: Nome
+      - paragraph: LUCAS SILVA
+      - paragraph: Email
+      - paragraph: lucasrezendelrs@gmail.com
+      - paragraph: Loja de Retirada
+      - paragraph
+      - paragraph: Data do Pedido
+      - paragraph: /\\d+\\/\\d+\\/\\d+/
+      - heading "Pagamento" [level=4]
+      - paragraph: À Vista
+      - paragraph: /R\\$ \\d+\\.\\d+,\\d+/
+      `);
 
   })
 
