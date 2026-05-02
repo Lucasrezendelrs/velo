@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test'
 import { generateOrderCode } from '../support/helpers'
+import { OrderLockupPage } from '../support/pages/OrderLockupPage'
 
 test.describe('Consulta de Pedido', () => {
 
@@ -30,8 +31,8 @@ test.describe('Consulta de Pedido', () => {
     }
 
     // Act
-    await page.getByTestId('search-order-id').fill(order.number)
-    await page.getByTestId('search-order-button').click()
+    const orderLockupPage = new OrderLockupPage(page)
+    await orderLockupPage.searchOrder(order.number)
 
     // Assert
     await expect(page.getByTestId(`order-result-${order.number}`)).toMatchAriaSnapshot(`
@@ -89,8 +90,8 @@ test.describe('Consulta de Pedido', () => {
     }
 
     // Act
-    await page.getByTestId('search-order-id').fill(order.number)
-    await page.getByTestId('search-order-button').click()
+    const orderLockupPage = new OrderLockupPage(page)
+    await orderLockupPage.searchOrder(order.number)
 
     // Assert
     await expect(page.getByTestId(`order-result-${order.number}`)).toMatchAriaSnapshot(`
@@ -148,8 +149,8 @@ test.describe('Consulta de Pedido', () => {
     }
 
     // Act
-    await page.getByTestId('search-order-id').fill(order.number)
-    await page.getByTestId('search-order-button').click()
+    const orderLockupPage = new OrderLockupPage(page)
+    await orderLockupPage.searchOrder(order.number)
 
     // Assert
     await expect(page.getByTestId(`order-result-${order.number}`)).toMatchAriaSnapshot(`
@@ -198,8 +199,8 @@ test.describe('Consulta de Pedido', () => {
     const order = generateOrderCode()
 
     // Act
-    await page.getByTestId('search-order-id').fill(order)
-    await page.getByTestId('search-order-button').click()
+    const orderLockupPage = new OrderLockupPage(page)
+    await orderLockupPage.searchOrder(order)
 
     //await expect(page.locator('#root')).toContainText('Pedido não encontrado');
     //await expect(page.locator('#root')).toContainText('Verifique o número do pedido e tente novamente');
